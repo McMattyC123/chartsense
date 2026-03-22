@@ -54,7 +54,7 @@ export default function App() {
           <Route path="/guide" element={<Guide />} />
         </Routes>
         <Toaster
-          theme="dark"
+          theme="light"
           position="bottom-center"
           toastOptions={{
             style: {
