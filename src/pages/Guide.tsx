@@ -25,11 +25,12 @@ const sectionLabelFive: CSSProperties = {
 
 function Reveal({ children, style }: { children: ReactNode; style?: CSSProperties }) {
   const ref = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(true)
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
+    setVisible(false)
     const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -47,15 +48,12 @@ function Reveal({ children, style }: { children: ReactNode; style?: CSSPropertie
     <div
       ref={ref}
       className={visible ? "animate-fade-up" : undefined}
-      style={
-        visible
-          ? style
-          : {
-              opacity: 0,
-              transform: "translateY(14px)",
-              ...style,
-            }
-      }
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "none" : "translateY(14px)",
+        transition: "opacity 0.3s ease, transform 0.3s ease",
+        ...style,
+      }}
     >
       {children}
     </div>
