@@ -3,9 +3,9 @@ import { useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
 
 const shell: CSSProperties = {
-  maxWidth: 680,
+  maxWidth: 720,
   margin: "0 auto",
-  padding: "24px 16px 48px",
+  padding: "48px 24px 80px",
   color: "var(--color-white)",
   fontFamily: "var(--font-body)",
 }
@@ -49,39 +49,40 @@ function Reveal({ children, style }: { children: ReactNode; style?: CSSPropertie
   )
 }
 
-const btnAccent: CSSProperties = {
+const btnPrimary: CSSProperties = {
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
-  gap: 6,
-  padding: "14px 20px",
-  borderRadius: 10,
-  background: "linear-gradient(135deg, var(--color-accent), var(--color-accent-deep))",
-  color: "var(--color-white)",
-  fontWeight: 700,
+  gap: 8,
+  padding: "16px 32px",
+  borderRadius: 8,
+  background: "var(--color-accent)",
+  color: "white",
+  fontWeight: 500,
   fontSize: 15,
   textDecoration: "none",
   border: "none",
   cursor: "pointer",
   fontFamily: "var(--font-body)",
-  boxShadow: "0 2px 8px color-mix(in srgb, var(--color-accent) 35%, transparent)",
+  transition: "background 0.2s ease",
 }
 
-const btnOutline: CSSProperties = {
+const btnSecondary: CSSProperties = {
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
-  gap: 6,
-  padding: "14px 20px",
-  borderRadius: 10,
+  gap: 8,
+  padding: "16px 32px",
+  borderRadius: 8,
   background: "transparent",
   color: "var(--color-white)",
-  fontWeight: 600,
+  fontWeight: 500,
   fontSize: 15,
   textDecoration: "none",
   border: "1px solid var(--color-divider)",
   cursor: "pointer",
   fontFamily: "var(--font-body)",
+  transition: "all 0.2s ease",
 }
 
 export default function Landing() {
@@ -89,37 +90,55 @@ export default function Landing() {
     <div style={shell}>
       {/* 1. HERO */}
       <Reveal>
-        <section style={{ marginBottom: 48 }}>
-          <h1
+        <section style={{ marginBottom: 80, textAlign: "center" }}>
+          <p
             style={{
               margin: "0 0 16px",
-              fontSize: "clamp(1.75rem, 5vw, 2.25rem)",
-              fontWeight: 800,
-              letterSpacing: "-0.03em",
-              lineHeight: 1.15,
-              color: "var(--color-white)",
+              fontSize: 13,
+              fontWeight: 500,
+              letterSpacing: "0.08em",
+              color: "var(--color-muted)",
+              textTransform: "uppercase",
             }}
           >
-            Stop Guessing. Start Reading.
+            Chart Analysis Education
+          </p>
+          <h1
+            style={{
+              margin: "0 0 20px",
+              fontSize: "clamp(2.25rem, 6vw, 3.5rem)",
+              fontWeight: 400,
+              letterSpacing: "-0.03em",
+              lineHeight: 1.1,
+              color: "var(--color-white)",
+              fontFamily: "var(--font-heading)",
+            }}
+          >
+            Learn to Read Charts
+            <br />
+            <span style={{ fontStyle: "italic" }}>with Clarity</span>
           </h1>
           <p
             style={{
-              margin: "0 0 28px",
-              fontSize: 16,
-              lineHeight: 1.55,
+              margin: "0 auto 32px",
+              fontSize: 17,
+              lineHeight: 1.65,
               color: "var(--color-muted)",
-              maxWidth: 560,
+              maxWidth: 520,
             }}
           >
-            AI-powered chart analysis using the Less Is More methodology — 5 proven indicators,
-            structured results, every time.
+            A structured approach to technical analysis using five proven indicators.
+            Built for learning, not speculation.
           </p>
-          <div className="landing-hero-actions" style={{ marginBottom: 20 }}>
-            <Link to="/analyze" style={btnAccent}>
-              Analyze a Chart →
+          <div className="landing-hero-actions" style={{ marginBottom: 24, justifyContent: "center" }}>
+            <Link to="/analyze" style={btnPrimary}>
+              Try the Analyzer
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
             </Link>
-            <Link to="/guide" style={btnOutline}>
-              Learn the Method
+            <Link to="/guide" style={btnSecondary}>
+              Read the Methodology
             </Link>
           </div>
           <p
@@ -127,191 +146,136 @@ export default function Landing() {
               margin: 0,
               fontSize: 12,
               color: "var(--color-muted)",
-              letterSpacing: "0.02em",
             }}
           >
-            Used by traders who trade less and win more
+            Educational tool for understanding market structure
           </p>
         </section>
       </Reveal>
 
-      {/* 2. THE PROBLEM */}
+      {/* 2. TRUST INDICATORS */}
       <Reveal>
-        <section style={{ marginBottom: 48 }}>
-          <h2
+        <section style={{ marginBottom: 80 }}>
+          <div
             style={{
-              margin: "0 0 20px",
-              fontSize: 13,
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.12em",
-              color: "var(--color-muted)",
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: 1,
+              background: "var(--color-divider)",
+              borderRadius: 12,
+              overflow: "hidden",
             }}
           >
-            The problem
-          </h2>
-          <div className="landing-problem-grid">
-            <ProblemCard
-              icon="📊"
-              title="Too Many Indicators"
-              body="Most traders use 10+ indicators that contradict each other. Analysis paralysis kills accounts."
-            />
-            <ProblemCard
-              icon="🎲"
-              title="No Structure"
-              body="Without a repeatable process, every trade is a guess. Emotion fills the gap where process should be."
-            />
-            <ProblemCard
-              icon="🔍"
-              title="Missing Context"
-              body="Trading a 15m signal against a 1H downtrend. The most common and most expensive mistake."
-            />
+            <TrustStat number="5" label="Core Indicators" />
+            <TrustStat number="7" label="Analysis Sections" />
+            <TrustStat number="1" label="Clear Framework" />
           </div>
         </section>
       </Reveal>
 
-      {/* 3. THE SOLUTION */}
+      {/* 3. THE APPROACH */}
       <Reveal>
-        <section style={{ marginBottom: 48 }}>
-          <div
+        <section style={{ marginBottom: 80 }}>
+          <SectionLabel>The Approach</SectionLabel>
+          <h2
             style={{
-              borderLeft: "3px solid var(--color-accent)",
-              paddingLeft: 14,
-              marginBottom: 20,
+              margin: "0 0 24px",
+              fontSize: "clamp(1.5rem, 4vw, 2rem)",
+              fontWeight: 400,
+              fontFamily: "var(--font-heading)",
+              color: "var(--color-white)",
             }}
           >
-            <h2
-              style={{
-                margin: 0,
-                fontSize: "clamp(1.25rem, 3.5vw, 1.5rem)",
-                fontWeight: 800,
-                letterSpacing: "-0.02em",
-                color: "var(--color-white)",
-              }}
-            >
-              The Less Is More Methodology
-            </h2>
-          </div>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            Less indicators. More understanding.
+          </h2>
+          <p
+            style={{
+              margin: "0 0 32px",
+              fontSize: 16,
+              lineHeight: 1.7,
+              color: "var(--color-muted)",
+            }}
+          >
+            Most traders struggle not from lack of tools, but from too many conflicting signals.
+            The Less Is More methodology focuses on five indicators that cover all essential
+            dimensions of price analysis without redundancy.
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             <IndicatorRow
-              dotColor="var(--color-accent)"
               name="Bollinger Bands"
               setting="BB(15,2)"
-              desc="Volatility + dynamic S/R"
+              desc="Volatility and dynamic support/resistance"
+              color="var(--color-info)"
             />
             <IndicatorRow
-              dotColor="var(--color-accent)"
               name="MACD"
               setting="8/21/5"
-              desc="Momentum direction + divergence"
+              desc="Momentum direction and divergence signals"
+              color="var(--color-info)"
             />
             <IndicatorRow
-              dotColor="var(--color-purple)"
               name="RSI"
-              setting="RSI(9) 60/40"
-              desc="Speed of momentum"
+              setting="RSI(9)"
+              desc="Speed and exhaustion of price movement"
+              color="var(--color-purple)"
             />
             <IndicatorRow
-              dotColor="var(--color-green)"
               name="Volume"
-              setting="20-period MA"
-              desc="Confirms or kills every signal"
+              setting="20 MA"
+              desc="Validates conviction behind price moves"
+              color="var(--color-green)"
             />
             <IndicatorRow
-              dotColor="var(--color-gold)"
               name="HTF Bias"
-              setting="1H check"
-              desc="Filters 80% of losing setups"
+              setting="1H context"
+              desc="Filters trades against the larger trend"
+              color="var(--color-gold)"
             />
-          </div>
-
-          <div
-            style={{
-              marginTop: 20,
-              padding: "14px 16px",
-              borderRadius: 10,
-              background: "var(--color-panel)",
-              border: "1px solid var(--color-divider)",
-              fontSize: 13,
-              color: "var(--color-muted)",
-              fontFamily: "var(--font-mono)",
-              lineHeight: 1.5,
-            }}
-          >
-            Nothing else. Every other indicator is redundant.
           </div>
         </section>
       </Reveal>
 
       {/* 4. HOW IT WORKS */}
       <Reveal>
-        <section style={{ marginBottom: 48 }}>
-          <h2
-            style={{
-              margin: "0 0 8px",
-              fontSize: 13,
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.12em",
-              color: "var(--color-muted)",
-            }}
-          >
-            How it works
-          </h2>
-          <p
-            style={{
-              margin: "0 0 22px",
-              fontSize: "clamp(1.15rem, 3vw, 1.35rem)",
-              fontWeight: 800,
-              color: "var(--color-white)",
-            }}
-          >
-            3 steps
-          </p>
-          <ol style={{ margin: 0, paddingLeft: 22, color: "var(--color-muted)", fontSize: 15, lineHeight: 1.65 }}>
-            <li style={{ marginBottom: 10 }}>
-              <span style={{ color: "var(--color-white)", fontWeight: 600 }}>Screenshot your chart</span> — any pair,
-              any timeframe
-            </li>
-            <li style={{ marginBottom: 10 }}>
-              <span style={{ color: "var(--color-white)", fontWeight: 600 }}>Drop it into ChartSense</span> with
-              optional notes
-            </li>
-            <li>
-              <span style={{ color: "var(--color-white)", fontWeight: 600 }}>Get a structured 7-section analysis</span>{" "}
-              in seconds
-            </li>
-          </ol>
-          <div style={{ marginTop: 24 }}>
-            <Link to="/analyze" style={btnAccent}>
-              Try It Free →
-            </Link>
+        <section style={{ marginBottom: 80 }}>
+          <SectionLabel>How It Works</SectionLabel>
+          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+            <ProcessStep number="01" title="Upload Your Chart">
+              Take a screenshot of any chart with your preferred indicators visible.
+              PNG or JPG format accepted.
+            </ProcessStep>
+            <ProcessStep number="02" title="Add Context">
+              Optionally provide notes about the pair, timeframe, or your current
+              position for more relevant analysis.
+            </ProcessStep>
+            <ProcessStep number="03" title="Receive Structured Analysis">
+              Get a comprehensive 7-section breakdown covering indicator readings,
+              situation assessment, and actionable trade levels.
+            </ProcessStep>
           </div>
         </section>
       </Reveal>
 
-      {/* 5. WHAT YOU GET */}
+      {/* 5. OUTPUT PREVIEW */}
       <Reveal>
-        <section style={{ marginBottom: 48 }}>
-          <h2
+        <section style={{ marginBottom: 80 }}>
+          <SectionLabel>Analysis Output</SectionLabel>
+          <p
             style={{
-              margin: "0 0 16px",
-              fontSize: 13,
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.12em",
+              margin: "0 0 24px",
+              fontSize: 16,
+              lineHeight: 1.7,
               color: "var(--color-muted)",
             }}
           >
-            What you get
-          </h2>
+            Every analysis follows a consistent structure, providing clear and actionable
+            insights rather than vague commentary.
+          </p>
           <div
             style={{
               display: "flex",
               flexWrap: "wrap",
               gap: 8,
-              marginBottom: 16,
             }}
           >
             {[
@@ -327,127 +291,117 @@ export default function Landing() {
                 key={label}
                 style={{
                   display: "inline-block",
-                  padding: "6px 12px",
-                  borderRadius: 999,
-                  fontSize: 11,
-                  fontWeight: 600,
-                  color: "var(--color-accent)",
-                  background: "var(--color-card)",
+                  padding: "8px 14px",
+                  borderRadius: 6,
+                  fontSize: 13,
+                  fontWeight: 500,
+                  color: "var(--color-muted)",
+                  background: "var(--color-panel)",
                   border: "1px solid var(--color-divider)",
-                  fontFamily: "var(--font-mono)",
                 }}
               >
                 {label}
               </span>
             ))}
           </div>
-          <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: "var(--color-muted)" }}>
-            Every analysis follows the same structure. No vague commentary. No hedging. A direct verdict every time.
-          </p>
         </section>
       </Reveal>
 
       {/* 6. PRICING */}
       <Reveal>
-        <section style={{ marginBottom: 48 }}>
-          <h2
-            style={{
-              margin: "0 0 20px",
-              fontSize: 13,
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.12em",
-              color: "var(--color-muted)",
-            }}
-          >
-            Pricing
-          </h2>
+        <section style={{ marginBottom: 80 }}>
+          <SectionLabel>Pricing</SectionLabel>
           <div className="landing-pricing-grid">
             <div
               style={{
-                padding: 20,
+                padding: 32,
                 borderRadius: 12,
                 background: "var(--color-panel)",
                 border: "1px solid var(--color-divider)",
                 display: "flex",
                 flexDirection: "column",
-                gap: 12,
+                gap: 16,
               }}
             >
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: 28, fontWeight: 700, color: "var(--color-white)" }}>
-                $0
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 500, color: "var(--color-muted)", marginBottom: 4 }}>
+                  Free
+                </div>
+                <div style={{ fontSize: 32, fontWeight: 400, color: "var(--color-white)", fontFamily: "var(--font-heading)" }}>
+                  $0
+                </div>
               </div>
               <ul
                 style={{
                   margin: 0,
-                  paddingLeft: 18,
+                  padding: 0,
+                  listStyle: "none",
                   color: "var(--color-muted)",
-                  fontSize: 13,
-                  lineHeight: 1.7,
+                  fontSize: 14,
+                  lineHeight: 2,
                   flex: 1,
                 }}
               >
-                <li>3 analyses/day</li>
-                <li>Full 7-section analysis</li>
-                <li>Less Is More methodology</li>
+                <li style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <CheckIcon /> 3 analyses per day
+                </li>
+                <li style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <CheckIcon /> Full 7-section analysis
+                </li>
+                <li style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <CheckIcon /> Complete methodology guide
+                </li>
               </ul>
-              <Link to="/analyze" style={{ ...btnOutline, width: "100%", boxSizing: "border-box" }}>
-                Get Started Free
+              <Link to="/analyze" style={{ ...btnSecondary, width: "100%", boxSizing: "border-box" }}>
+                Get Started
               </Link>
             </div>
 
             <div
               style={{
-                padding: 20,
+                padding: 32,
                 borderRadius: 12,
-                background: "var(--color-card)",
-                border: "1px solid var(--color-accent)",
-                boxShadow: "0 0 0 1px color-mix(in srgb, var(--color-accent) 18%, transparent)",
+                background: "var(--color-panel)",
+                border: "2px solid var(--color-accent)",
                 display: "flex",
                 flexDirection: "column",
-                gap: 12,
+                gap: 16,
               }}
             >
-              <div
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 22,
-                  fontWeight: 700,
-                  color: "var(--color-white)",
-                }}
-              >
-                $8<span style={{ fontSize: 14, fontWeight: 600, color: "var(--color-muted)" }}>/month</span>
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 500, color: "var(--color-muted)", marginBottom: 4 }}>
+                  Pro
+                </div>
+                <div style={{ fontSize: 32, fontWeight: 400, color: "var(--color-white)", fontFamily: "var(--font-heading)" }}>
+                  $8<span style={{ fontSize: 16, fontWeight: 400, color: "var(--color-muted)" }}>/month</span>
+                </div>
               </div>
               <ul
                 style={{
                   margin: 0,
-                  paddingLeft: 18,
+                  padding: 0,
+                  listStyle: "none",
                   color: "var(--color-muted)",
-                  fontSize: 13,
-                  lineHeight: 1.7,
+                  fontSize: 14,
+                  lineHeight: 2,
                   flex: 1,
                 }}
               >
-                <li>Unlimited analyses</li>
-                <li>Everything in Free</li>
-                <li>Analysis history</li>
-                <li>Priority support</li>
+                <li style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <CheckIcon /> Unlimited analyses
+                </li>
+                <li style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <CheckIcon /> Analysis history
+                </li>
+                <li style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <CheckIcon /> Priority support
+                </li>
               </ul>
-              <button type="button" style={{ ...btnAccent, width: "100%", boxSizing: "border-box" }}>
+              <button type="button" style={{ ...btnPrimary, width: "100%", boxSizing: "border-box" }}>
                 Upgrade to Pro
               </button>
             </div>
           </div>
-          <p
-            style={{
-              margin: "14px 0 0",
-              fontSize: 11,
-              color: "var(--color-muted)",
-              textAlign: "center",
-            }}
-          >
-            No credit card required for free tier
-          </p>
         </section>
       </Reveal>
 
@@ -455,116 +409,193 @@ export default function Landing() {
       <Reveal>
         <footer
           style={{
-            paddingTop: 24,
+            paddingTop: 40,
             borderTop: "1px solid var(--color-divider)",
             textAlign: "center",
           }}
         >
-          <p style={{ margin: "0 0 12px", fontSize: 14, fontWeight: 700, color: "var(--color-white)" }}>
-            ChartSense — Less Is More Trading
+          <p style={{ margin: "0 0 16px", fontSize: 18, fontWeight: 400, color: "var(--color-white)", fontFamily: "var(--font-heading)" }}>
+            ChartSense
           </p>
           <div
             style={{
               display: "flex",
               flexWrap: "wrap",
-              gap: 16,
+              gap: 24,
               justifyContent: "center",
-              marginBottom: 14,
+              marginBottom: 24,
             }}
           >
             <Link
               to="/analyze"
-              style={{ color: "var(--color-accent)", fontSize: 13, fontWeight: 600, textDecoration: "none" }}
+              style={{ color: "var(--color-muted)", fontSize: 14, textDecoration: "none" }}
             >
-              Analyze
+              Analyzer
             </Link>
             <Link
               to="/guide"
-              style={{ color: "var(--color-accent)", fontSize: 13, fontWeight: 600, textDecoration: "none" }}
+              style={{ color: "var(--color-muted)", fontSize: 14, textDecoration: "none" }}
             >
-              Guide
+              Methodology
             </Link>
           </div>
-          <p style={{ margin: "0 0 8px", fontSize: 11, color: "var(--color-muted)", lineHeight: 1.5 }}>
-            For educational purposes only · Not financial advice · Bar Book LLC
+          <p style={{ margin: "0 0 8px", fontSize: 12, color: "var(--color-muted)", lineHeight: 1.6 }}>
+            For educational purposes only. Not financial advice.
           </p>
-          <p style={{ margin: 0, fontSize: 11, color: "var(--color-muted)" }}>© 2026 ChartSense</p>
+          <p style={{ margin: 0, fontSize: 12, color: "var(--color-muted)" }}>
+            © 2026 Bar Book LLC
+          </p>
         </footer>
       </Reveal>
-
     </div>
   )
 }
 
-function ProblemCard({ icon, title, body }: { icon: string; title: string; body: string }) {
+function SectionLabel({ children }: { children: ReactNode }) {
+  return (
+    <p
+      style={{
+        margin: "0 0 12px",
+        fontSize: 12,
+        fontWeight: 500,
+        textTransform: "uppercase",
+        letterSpacing: "0.1em",
+        color: "var(--color-muted)",
+      }}
+    >
+      {children}
+    </p>
+  )
+}
+
+function TrustStat({ number, label }: { number: string; label: string }) {
   return (
     <div
       style={{
-        padding: 16,
-        borderRadius: 10,
+        padding: "28px 20px",
         background: "var(--color-panel)",
-        border: "1px solid var(--color-divider)",
-        minWidth: 0,
+        textAlign: "center",
       }}
     >
-      <div style={{ fontSize: 22, marginBottom: 8 }} aria-hidden>
-        {icon}
+      <div
+        style={{
+          fontSize: 28,
+          fontWeight: 400,
+          color: "var(--color-white)",
+          fontFamily: "var(--font-heading)",
+          marginBottom: 4,
+        }}
+      >
+        {number}
       </div>
-      <h3 style={{ margin: "0 0 8px", fontSize: 14, fontWeight: 700, color: "var(--color-white)" }}>{title}</h3>
-      <p style={{ margin: 0, fontSize: 12, lineHeight: 1.55, color: "var(--color-muted)" }}>{body}</p>
+      <div style={{ fontSize: 13, color: "var(--color-muted)" }}>{label}</div>
     </div>
   )
 }
 
 function IndicatorRow({
-  dotColor,
   name,
   setting,
   desc,
+  color,
 }: {
-  dotColor: string
   name: string
   setting: string
   desc: string
+  color: string
 }) {
   return (
     <div
       style={{
         display: "flex",
-        gap: 12,
+        gap: 16,
         alignItems: "flex-start",
-        padding: "12px 14px",
-        borderRadius: 10,
+        padding: "16px 20px",
+        borderRadius: 8,
         background: "var(--color-panel)",
         border: "1px solid var(--color-divider)",
       }}
     >
       <span
         style={{
-          width: 10,
-          height: 10,
+          width: 8,
+          height: 8,
           borderRadius: "50%",
-          background: dotColor,
-          marginTop: 5,
+          background: color,
+          marginTop: 6,
           flexShrink: 0,
-          border: "1px solid color-mix(in srgb, var(--color-white) 22%, transparent)",
         }}
       />
       <div style={{ minWidth: 0, flex: 1 }}>
-        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: 8, marginBottom: 4 }}>
-          <span style={{ fontWeight: 700, fontSize: 14, color: "var(--color-white)" }}>{name}</span>
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: 10, marginBottom: 4 }}>
+          <span style={{ fontWeight: 500, fontSize: 15, color: "var(--color-white)" }}>{name}</span>
           <span
-            className="mono"
             style={{
               fontSize: 12,
-              color: "var(--color-accent)",
+              color: "var(--color-muted)",
+              fontFamily: "var(--font-mono)",
             }}
           >
             {setting}
           </span>
         </div>
-        <p style={{ margin: 0, fontSize: 13, color: "var(--color-muted)", lineHeight: 1.45 }}>{desc}</p>
+        <p style={{ margin: 0, fontSize: 14, color: "var(--color-muted)", lineHeight: 1.5 }}>{desc}</p>
       </div>
     </div>
+  )
+}
+
+function ProcessStep({ number, title, children }: { number: string; title: string; children: ReactNode }) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        gap: 20,
+        alignItems: "flex-start",
+      }}
+    >
+      <span
+        style={{
+          fontSize: 13,
+          fontWeight: 500,
+          color: "var(--color-muted)",
+          fontFamily: "var(--font-mono)",
+          flexShrink: 0,
+          marginTop: 2,
+        }}
+      >
+        {number}
+      </span>
+      <div>
+        <h3
+          style={{
+            margin: "0 0 6px",
+            fontSize: 17,
+            fontWeight: 500,
+            color: "var(--color-white)",
+          }}
+        >
+          {title}
+        </h3>
+        <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: "var(--color-muted)" }}>{children}</p>
+      </div>
+    </div>
+  )
+}
+
+function CheckIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="var(--color-green)"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
   )
 }

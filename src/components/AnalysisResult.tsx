@@ -5,14 +5,14 @@ interface Section {
 }
 
 function getSectionColor(title: string): string {
-  if (title.includes("INDICATOR READINGS")) return "#4f8ef7"
-  if (title.includes("INDICATOR VOTE"))     return "#ffd700"
-  if (title.includes("CURRENT SITUATION"))  return "#00bcd4"
-  if (title.includes("ENTRY ASSESSMENT"))   return "#f7a34f"
-  if (title.includes("TRADE LEVELS"))       return "#26a69a"
-  if (title.includes("PRE-TRADE"))          return "#8bc34a"
-  if (title.includes("BOTTOM LINE"))        return "#ffd700"
-  return "#4f8ef7"
+  if (title.includes("INDICATOR READINGS")) return "var(--color-info)"
+  if (title.includes("INDICATOR VOTE")) return "var(--color-gold)"
+  if (title.includes("CURRENT SITUATION")) return "var(--color-info)"
+  if (title.includes("ENTRY ASSESSMENT")) return "var(--color-gold)"
+  if (title.includes("TRADE LEVELS")) return "var(--color-green)"
+  if (title.includes("PRE-TRADE")) return "var(--color-green)"
+  if (title.includes("BOTTOM LINE")) return "var(--color-accent)"
+  return "var(--color-info)"
 }
 
 function parseSections(text: string): Section[] {
@@ -33,38 +33,59 @@ function parseSections(text: string): Section[] {
 }
 
 function LineItem({ text }: { text: string }) {
-  let color = "#e8eaf0"
+  let color = "var(--color-white)"
   let fontWeight: "normal" | "bold" = "normal"
   const indent = text.startsWith("- ") || text.startsWith("* ") || text.startsWith("•")
 
-  if (text.includes("BULLISH") && !text.includes("NOT BULLISH")) { color = "#26a69a"; fontWeight = "bold" }
-  else if (text.includes("BEARISH"))                              { color = "#ef5350"; fontWeight = "bold" }
-  else if (text.includes("NO TRADE") || text.includes("MIXED"))  { color = "#ffd700"; fontWeight = "bold" }
-  else if (text.includes("CONFIRMS") && !text.includes("NOT"))   { color = "#26a69a" }
-  else if (text.includes("DOES NOT CONFIRM"))                     { color = "#ef5350" }
-  else if (text.includes("[x]") || text.includes("[X]"))          { color = "#26a69a" }
-  else if (text.includes("[ ]"))                                  { color = "#ef5350" }
+  if (text.includes("BULLISH") && !text.includes("NOT BULLISH")) {
+    color = "var(--color-green)"
+    fontWeight = "bold"
+  } else if (text.includes("BEARISH")) {
+    color = "var(--color-red)"
+    fontWeight = "bold"
+  } else if (text.includes("NO TRADE") || text.includes("MIXED")) {
+    color = "var(--color-gold)"
+    fontWeight = "bold"
+  } else if (text.includes("CONFIRMS") && !text.includes("NOT")) {
+    color = "var(--color-green)"
+  } else if (text.includes("DOES NOT CONFIRM")) {
+    color = "var(--color-red)"
+  } else if (text.includes("[x]") || text.includes("[X]")) {
+    color = "var(--color-green)"
+  } else if (text.includes("[ ]")) {
+    color = "var(--color-red)"
+  }
 
   // Bold label pattern: **Label:** rest
   const boldMatch = text.match(/^\*\*(.*?)\*\*(.*)/)
   if (boldMatch) {
     return (
-      <div style={{ marginBottom: 4, paddingLeft: indent ? 12 : 0, fontSize: 13, lineHeight: 1.6 }}>
-        <span style={{ color: "#f7a34f", fontWeight: "bold" }}>{boldMatch[1]}</span>
-        <span style={{ color: "#e8eaf0" }}>{boldMatch[2]}</span>
+      <div
+        style={{
+          marginBottom: 6,
+          paddingLeft: indent ? 16 : 0,
+          fontSize: 14,
+          lineHeight: 1.6,
+        }}
+      >
+        <span style={{ color: "var(--color-white)", fontWeight: 500 }}>{boldMatch[1]}</span>
+        <span style={{ color: "var(--color-muted)" }}>{boldMatch[2]}</span>
       </div>
     )
   }
 
   const clean = text.replace(/\*\*/g, "").replace(/^[-*•] /, "• ")
   return (
-    <div style={{
-      marginBottom: 4,
-      paddingLeft: indent ? 12 : 0,
-      color, fontWeight,
-      fontSize: 13,
-      lineHeight: 1.6,
-    }}>
+    <div
+      style={{
+        marginBottom: 6,
+        paddingLeft: indent ? 16 : 0,
+        color,
+        fontWeight,
+        fontSize: 14,
+        lineHeight: 1.6,
+      }}
+    >
       {clean}
     </div>
   )
@@ -78,32 +99,36 @@ export default function AnalysisResult({ text }: AnalysisResultProps) {
   const sections = parseSections(text)
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
       {sections.map((sec, i) => (
         <div
           key={i}
           className="animate-fade-up"
           style={{
             background: "var(--color-panel)",
-            borderRadius: 10,
+            borderRadius: 8,
             border: "1px solid var(--color-divider)",
             overflow: "hidden",
             animationDelay: `${i * 60}ms`,
             opacity: 0,
           }}
         >
-          <div style={{
-            background: "var(--color-card)",
-            borderLeft: `4px solid ${sec.color}`,
-            padding: "9px 14px",
-            fontWeight: 700,
-            fontSize: 13,
-            color: sec.color,
-            fontFamily: "var(--font-body)",
-          }}>
+          <div
+            style={{
+              background: "var(--color-card)",
+              borderLeft: `3px solid ${sec.color}`,
+              padding: "12px 18px",
+              fontWeight: 500,
+              fontSize: 13,
+              color: "var(--color-white)",
+              fontFamily: "var(--font-body)",
+              letterSpacing: "0.02em",
+              textTransform: "uppercase",
+            }}
+          >
             {sec.title}
           </div>
-          <div style={{ padding: "12px 14px" }}>
+          <div style={{ padding: "16px 18px" }}>
             {sec.lines.map((line, j) => (
               <LineItem key={j} text={line} />
             ))}

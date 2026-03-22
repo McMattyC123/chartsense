@@ -8,13 +8,13 @@ import { useRateLimit } from "@/hooks/useRateLimit"
 
 export default function Analyzer() {
   const [image, setImage] = useState<string | null>(null)
-  const [b64, setB64]       = useState<string | null>(null)
+  const [b64, setB64] = useState<string | null>(null)
   const [mediaType, setMediaType] = useState("image/png")
   const [notes, setNotes] = useState("")
-  const [loading, setLoading]         = useState(false)
+  const [loading, setLoading] = useState(false)
   const [analysisText, setAnalysisText] = useState("")
-  const [error, setError]             = useState<string | null>(null)
-  const [dragging, setDragging]       = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [dragging, setDragging] = useState(false)
 
   const { remaining, isLimited, increment } = useRateLimit()
   const { session, loading: authLoading } = useAuth()
@@ -80,15 +80,34 @@ export default function Analyzer() {
   }
 
   return (
-    <div style={{
-      minHeight: "100vh",
-      background: "var(--color-dark)",
-      color: "var(--color-white)",
-      fontFamily: "var(--font-body)",
-      padding: "20px 16px 40px",
-      maxWidth: 680,
-      margin: "0 auto",
-    }}>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "var(--color-dark)",
+        color: "var(--color-white)",
+        fontFamily: "var(--font-body)",
+        padding: "32px 24px 60px",
+        maxWidth: 720,
+        margin: "0 auto",
+      }}
+    >
+      {/* Page Header */}
+      <div style={{ marginBottom: 32 }}>
+        <h1
+          style={{
+            margin: "0 0 8px",
+            fontSize: 28,
+            fontWeight: 400,
+            fontFamily: "var(--font-heading)",
+            color: "var(--color-white)",
+          }}
+        >
+          Chart Analysis
+        </h1>
+        <p style={{ margin: 0, fontSize: 15, color: "var(--color-muted)" }}>
+          Upload a chart screenshot for structured technical analysis
+        </p>
+      </div>
 
       <AuthPanel />
 
@@ -100,7 +119,7 @@ export default function Analyzer() {
       />
 
       {/* Upload zone */}
-      <div style={{ marginBottom: 12 }}>
+      <div style={{ marginBottom: 16 }}>
         <UploadZone
           onImageLoad={handleImageLoad}
           image={image}
@@ -115,8 +134,8 @@ export default function Analyzer() {
         <>
           <textarea
             value={notes}
-            onChange={e => setNotes(e.target.value)}
-            placeholder="Optional: add context — e.g. 'ADA/USDT 15m, looking long' or 'bought at 0.265'"
+            onChange={(e) => setNotes(e.target.value)}
+            placeholder="Optional context: pair, timeframe, or your current position..."
             style={{
               width: "100%",
               boxSizing: "border-box",
@@ -124,13 +143,14 @@ export default function Analyzer() {
               border: "1px solid var(--color-divider)",
               borderRadius: 8,
               color: "var(--color-white)",
-              padding: "10px 12px",
-              fontSize: 13,
+              padding: "14px 16px",
+              fontSize: 14,
               resize: "vertical",
-              minHeight: 56,
-              marginBottom: 12,
+              minHeight: 72,
+              marginBottom: 16,
               outline: "none",
               fontFamily: "var(--font-body)",
+              lineHeight: 1.5,
             }}
           />
           <button
@@ -138,93 +158,138 @@ export default function Analyzer() {
             disabled={loading || isLimited || !session || authLoading}
             style={{
               width: "100%",
-              padding: 14,
-              background: loading || isLimited || !session || authLoading
-                ? "var(--color-card)"
-                : "linear-gradient(135deg, var(--color-accent), #3a7bd5)",
+              padding: 16,
+              background:
+                loading || isLimited || !session || authLoading
+                  ? "var(--color-divider)"
+                  : "var(--color-accent)",
               border: "none",
-              borderRadius: 10,
-              color: loading || isLimited || !session || authLoading ? "var(--color-muted)" : "white",
+              borderRadius: 8,
+              color:
+                loading || isLimited || !session || authLoading
+                  ? "var(--color-muted)"
+                  : "white",
               fontSize: 15,
-              fontWeight: 700,
-              cursor: loading || isLimited || !session || authLoading ? "not-allowed" : "pointer",
+              fontWeight: 500,
+              cursor:
+                loading || isLimited || !session || authLoading
+                  ? "not-allowed"
+                  : "pointer",
               fontFamily: "var(--font-body)",
               transition: "all 0.2s",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
             }}
           >
-            {loading
-              ? "⏳  Analyzing..."
-              : !session
-                ? "🔒  Sign in to analyze"
-                : "🔍  Analyze Chart"}
+            {loading ? (
+              <>
+                <LoadingSpinner />
+                Analyzing...
+              </>
+            ) : !session ? (
+              "Sign in to analyze"
+            ) : (
+              "Analyze Chart"
+            )}
           </button>
         </>
       )}
 
-      {/* Loading pulse */}
+      {/* Loading state */}
       {loading && (
-        <div style={{
-          textAlign: "center",
-          color: "var(--color-muted)",
-          fontSize: 13,
-          marginTop: 12,
-          padding: "8px 0",
-        }}
-          className="animate-pulse-subtle"
+        <div
+          style={{
+            textAlign: "center",
+            color: "var(--color-muted)",
+            fontSize: 14,
+            marginTop: 16,
+            padding: "12px 0",
+          }}
         >
-          Reading indicators...
+          Reading chart indicators and generating analysis...
         </div>
       )}
 
       {/* Error */}
       {error && (
-        <div style={{
-          background: "#2a1a1a",
-          border: "1px solid var(--color-red)",
-          borderRadius: 8,
-          padding: "10px 14px",
-          color: "var(--color-red)",
-          fontSize: 13,
-          marginTop: 12,
-        }}>
+        <div
+          style={{
+            background: "var(--color-panel)",
+            border: "1px solid var(--color-red)",
+            borderRadius: 8,
+            padding: "14px 18px",
+            color: "var(--color-red)",
+            fontSize: 14,
+            marginTop: 16,
+          }}
+        >
           {error}
         </div>
       )}
 
       {/* Analysis output */}
       {analysisText && (
-        <div style={{ marginTop: 16 }}>
+        <div style={{ marginTop: 24 }}>
           <AnalysisResult text={analysisText} />
           <button
             onClick={reset}
             style={{
               width: "100%",
-              padding: 12,
-              background: "var(--color-card)",
+              padding: 14,
+              background: "var(--color-panel)",
               border: "1px solid var(--color-divider)",
-              borderRadius: 10,
+              borderRadius: 8,
               color: "var(--color-muted)",
-              fontSize: 13,
-              fontWeight: 600,
+              fontSize: 14,
+              fontWeight: 500,
               cursor: "pointer",
-              marginTop: 12,
+              marginTop: 16,
               fontFamily: "var(--font-body)",
+              transition: "all 0.2s",
             }}
           >
-            📷  Analyze Another Chart
+            Analyze Another Chart
           </button>
         </div>
       )}
 
       {/* Footer */}
-      <div style={{
-        textAlign: "center",
-        marginTop: 24,
-        color: "var(--color-muted)",
-        fontSize: 11,
-      }}>
-        For educational purposes only · Not financial advice · Bar Book LLC
+      <div
+        style={{
+          textAlign: "center",
+          marginTop: 40,
+          paddingTop: 24,
+          borderTop: "1px solid var(--color-divider)",
+          color: "var(--color-muted)",
+          fontSize: 12,
+        }}
+      >
+        For educational purposes only. Not financial advice.
       </div>
     </div>
+  )
+}
+
+function LoadingSpinner() {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      style={{
+        animation: "spin 1s linear infinite",
+      }}
+    >
+      <circle cx="12" cy="12" r="10" strokeOpacity="0.25" />
+      <path d="M12 2a10 10 0 0 1 10 10" strokeLinecap="round" />
+      <style>
+        {`@keyframes spin { to { transform: rotate(360deg); } }`}
+      </style>
+    </svg>
   )
 }

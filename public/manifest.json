@@ -1,11 +1,11 @@
 {
-  "name": "ChartSense - Daytrading Analytics",
+  "name": "ChartSense - Chart Analysis Education",
   "short_name": "ChartSense",
-  "description": "AI-powered chart analysis tool for beginner daytraders. Less Is More methodology — BB, MACD, RSI, Volume, HTF Bias.",
+  "description": "Educational chart analysis tool using five proven indicators. Learn technical analysis with the Less Is More methodology.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0f1117",
-  "theme_color": "#0f1117",
+  "background_color": "#f5f2ed",
+  "theme_color": "#f5f2ed",
   "orientation": "portrait-primary",
   "icons": [
     {

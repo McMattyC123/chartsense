@@ -6,43 +6,68 @@ interface RateLimitBannerProps {
   onUpgradeClick: () => void
 }
 
-export default function RateLimitBanner({ remaining, isLimited, onUpgradeClick }: RateLimitBannerProps) {
+export default function RateLimitBanner({
+  remaining,
+  isLimited,
+  onUpgradeClick,
+}: RateLimitBannerProps) {
   if (isLimited) {
     return (
       <div
         className="animate-fade-in"
         style={{
           background: "var(--color-panel)",
-          border: "1px solid var(--color-gold)",
-          borderRadius: 10,
-          padding: "16px",
-          marginBottom: 14,
+          border: "1px solid var(--color-divider)",
+          borderRadius: 8,
+          padding: "20px 24px",
+          marginBottom: 20,
         }}
       >
-        <div style={{ fontWeight: 700, color: "var(--color-gold)", marginBottom: 6, fontSize: 14 }}>
+        <div
+          style={{
+            fontWeight: 500,
+            color: "var(--color-white)",
+            marginBottom: 8,
+            fontSize: 15,
+          }}
+        >
           Daily limit reached
         </div>
-        <div style={{ color: "var(--color-muted)", fontSize: 13, marginBottom: 14 }}>
-          You've used your {FREE_LIMIT} free analyses for today. Upgrade to Pro for unlimited access.
+        <div
+          style={{
+            color: "var(--color-muted)",
+            fontSize: 14,
+            marginBottom: 16,
+            lineHeight: 1.5,
+          }}
+        >
+          You've used your {FREE_LIMIT} free analyses for today. Upgrade for unlimited access.
         </div>
         <button
           onClick={onUpgradeClick}
           style={{
             width: "100%",
-            padding: "12px",
-            background: "linear-gradient(135deg, var(--color-accent), #3a7bd5)",
+            padding: 14,
+            background: "var(--color-accent)",
             border: "none",
             borderRadius: 8,
             color: "white",
             fontSize: 14,
-            fontWeight: 700,
+            fontWeight: 500,
             cursor: "pointer",
             fontFamily: "var(--font-body)",
           }}
         >
           Upgrade to Pro — $8/month
         </button>
-        <div style={{ textAlign: "center", marginTop: 8, fontSize: 11, color: "var(--color-muted)" }}>
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: 12,
+            fontSize: 12,
+            color: "var(--color-muted)",
+          }}
+        >
           Limit resets at midnight
         </div>
       </div>
@@ -54,33 +79,39 @@ export default function RateLimitBanner({ remaining, isLimited, onUpgradeClick }
   const pct = (remaining / FREE_LIMIT) * 100
 
   return (
-    <div style={{ marginBottom: 12 }}>
-      <div style={{
-        display: "flex",
-        justifyContent: "space-between",
-        fontSize: 11,
-        color: "var(--color-muted)",
-        marginBottom: 4,
-      }}>
-        <span>{remaining} of {FREE_LIMIT} free analyses remaining today</span>
+    <div style={{ marginBottom: 16 }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          fontSize: 12,
+          color: "var(--color-muted)",
+          marginBottom: 6,
+        }}
+      >
+        <span>
+          {remaining} of {FREE_LIMIT} free analyses remaining
+        </span>
         <span>Resets at midnight</span>
       </div>
-      <div style={{
-        width: "100%",
-        height: 3,
-        background: "var(--color-divider)",
-        borderRadius: 2,
-        overflow: "hidden",
-      }}>
-        <div style={{
-          width: `${pct}%`,
-          height: "100%",
-          background: remaining === 1
-            ? "var(--color-red)"
-            : "var(--color-accent)",
+      <div
+        style={{
+          width: "100%",
+          height: 4,
+          background: "var(--color-divider)",
           borderRadius: 2,
-          transition: "width 0.4s ease",
-        }} />
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            width: `${pct}%`,
+            height: "100%",
+            background: remaining === 1 ? "var(--color-red)" : "var(--color-green)",
+            borderRadius: 2,
+            transition: "width 0.4s ease",
+          }}
+        />
       </div>
     </div>
   )

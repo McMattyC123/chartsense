@@ -12,9 +12,9 @@ export default function AuthPanel() {
   const panelStyle: CSSProperties = {
     background: "var(--color-panel)",
     border: "1px solid var(--color-divider)",
-    borderRadius: 10,
-    padding: "14px 16px",
-    marginBottom: 20,
+    borderRadius: 8,
+    padding: "20px 24px",
+    marginBottom: 24,
     fontFamily: "var(--font-body)",
   }
 
@@ -23,34 +23,34 @@ export default function AuthPanel() {
     boxSizing: "border-box",
     background: "var(--color-card)",
     border: "1px solid var(--color-divider)",
-    borderRadius: 8,
+    borderRadius: 6,
     color: "var(--color-white)",
-    padding: "10px 12px",
+    padding: "12px 14px",
     fontSize: 14,
-    marginBottom: 10,
+    marginBottom: 12,
     outline: "none",
     fontFamily: "var(--font-body)",
   }
 
   const btnPrimary: CSSProperties = {
     width: "100%",
-    padding: "12px 16px",
-    borderRadius: 10,
+    padding: "14px 20px",
+    borderRadius: 8,
     border: "none",
-    background: "linear-gradient(135deg, var(--color-accent), var(--color-accent-deep))",
-    color: "var(--color-white)",
+    background: "var(--color-accent)",
+    color: "white",
     fontSize: 14,
-    fontWeight: 700,
+    fontWeight: 500,
     cursor: busy ? "not-allowed" : "pointer",
     fontFamily: "var(--font-body)",
-    opacity: busy ? 0.75 : 1,
-    boxShadow: "0 2px 8px color-mix(in srgb, var(--color-accent) 30%, transparent)",
+    opacity: busy ? 0.7 : 1,
+    transition: "opacity 0.2s ease",
   }
 
   if (loading) {
     return (
-      <div style={{ ...panelStyle, color: "var(--color-muted)", fontSize: 13 }}>
-        Loading session…
+      <div style={{ ...panelStyle, color: "var(--color-muted)", fontSize: 14 }}>
+        Loading session...
       </div>
     )
   }
@@ -60,15 +60,19 @@ export default function AuthPanel() {
     return (
       <div
         style={{
-          marginBottom: 16,
+          marginBottom: 20,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          gap: 12,
+          gap: 16,
           flexWrap: "wrap",
-          fontSize: 12,
+          fontSize: 13,
           color: "var(--color-muted)",
           fontFamily: "var(--font-body)",
+          padding: "12px 16px",
+          background: "var(--color-panel)",
+          borderRadius: 8,
+          border: "1px solid var(--color-divider)",
         }}
       >
         <span
@@ -82,7 +86,7 @@ export default function AuthPanel() {
             maxWidth: "100%",
           }}
         >
-          {label}
+          Signed in as {label}
         </span>
         <button
           type="button"
@@ -91,14 +95,14 @@ export default function AuthPanel() {
             background: "none",
             border: "none",
             padding: 0,
-            color: "var(--color-accent)",
-            fontSize: 12,
-            fontWeight: 600,
+            color: "var(--color-muted)",
+            fontSize: 13,
+            fontWeight: 500,
             cursor: "pointer",
             fontFamily: "var(--font-body)",
             flexShrink: 0,
             textDecoration: "underline",
-            textUnderlineOffset: 2,
+            textUnderlineOffset: 3,
           }}
         >
           Sign out
@@ -110,12 +114,48 @@ export default function AuthPanel() {
   if (sent) {
     return (
       <div style={panelStyle}>
-        <p style={{ margin: 0, fontSize: 15, fontWeight: 600, color: "var(--color-white)" }}>
-          ✉️ Check your email — click the link to sign in
-        </p>
-        <p style={{ margin: "8px 0 0", fontSize: 13, color: "var(--color-muted)" }}>
-          No password needed. Ever.
-        </p>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 12,
+            marginBottom: 12,
+          }}
+        >
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 8,
+              background: "var(--color-card)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="var(--color-green)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="M22 7l-10 7L2 7" />
+            </svg>
+          </div>
+          <div>
+            <p style={{ margin: 0, fontSize: 15, fontWeight: 500, color: "var(--color-white)" }}>
+              Check your email
+            </p>
+            <p style={{ margin: 0, fontSize: 13, color: "var(--color-muted)" }}>
+              Click the link to sign in
+            </p>
+          </div>
+        </div>
         <button
           type="button"
           onClick={() => {
@@ -123,17 +163,15 @@ export default function AuthPanel() {
             setError(null)
           }}
           style={{
-            marginTop: 14,
             background: "none",
             border: "none",
             padding: 0,
-            color: "var(--color-accent)",
-            fontSize: 12,
-            fontWeight: 600,
+            color: "var(--color-muted)",
+            fontSize: 13,
             cursor: "pointer",
             fontFamily: "var(--font-body)",
             textDecoration: "underline",
-            textUnderlineOffset: 2,
+            textUnderlineOffset: 3,
           }}
         >
           Use a different email
@@ -144,8 +182,8 @@ export default function AuthPanel() {
 
   return (
     <div style={panelStyle}>
-      <p style={{ margin: "0 0 12px", fontSize: 12, color: "var(--color-muted)", lineHeight: 1.45 }}>
-        Sign in with email — we&apos;ll send you a magic link. No password.
+      <p style={{ margin: "0 0 16px", fontSize: 14, color: "var(--color-muted)", lineHeight: 1.5 }}>
+        Sign in with your email address. We'll send you a secure link.
       </p>
       <form
         onSubmit={async (e) => {
@@ -177,10 +215,10 @@ export default function AuthPanel() {
           required
         />
         {error && (
-          <p style={{ margin: "0 0 10px", fontSize: 12, color: "var(--color-red)" }}>{error}</p>
+          <p style={{ margin: "0 0 12px", fontSize: 13, color: "var(--color-red)" }}>{error}</p>
         )}
         <button type="submit" style={btnPrimary} disabled={busy || !email.trim()}>
-          {busy ? "Sending..." : "Send Magic Link"}
+          {busy ? "Sending..." : "Send Sign-in Link"}
         </button>
       </form>
     </div>

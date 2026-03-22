@@ -3,25 +3,32 @@
 /* ── Google Fonts ─────────────────────────────────────────── */
 /* Loaded via index.html link tag for performance */
 
-/* ── CSS Variables — ChartSense Dark Theme ───────────────── */
+/* ── CSS Variables — ChartSense Educational Theme ───────────────── */
 :root {
-  --color-dark:    #0f1117;
-  --color-panel:   #1a1d27;
-  --color-card:    #22263a;
-  --color-accent:  #4f8ef7;
-  --color-accent-deep: #3a7bd5;
-  --color-accent2: #f7a34f;
-  --color-green:   #26a69a;
-  --color-red:     #ef5350;
-  --color-gold:    #ffd700;
-  --color-purple:  #9b87f5;
-  --color-rsi-purple: #9c27b0;
-  --color-white:   #e8eaf0;
-  --color-muted:   #8a8fa8;
-  --color-divider: #2e3250;
+  /* Warm, trustworthy palette inspired by professional finance education */
+  --color-dark:    #f5f2ed;        /* Warm off-white background */
+  --color-panel:   #ffffff;        /* Clean white panels */
+  --color-card:    #faf8f5;        /* Subtle warm card background */
+  --color-accent:  #1a1a1a;        /* Professional black for primary actions */
+  --color-accent-deep: #2d2d2d;    /* Slightly lighter black for hover */
+  --color-accent2: #5c6b54;        /* Muted sage green for secondary */
+  --color-green:   #3d7a5a;        /* Educational green - trustworthy */
+  --color-red:     #b54a4a;        /* Muted red - less alarming */
+  --color-gold:    #9a7b4f;        /* Warm bronze - sophisticated */
+  --color-purple:  #6b5b7a;        /* Muted purple - scholarly */
+  --color-rsi-purple: #6b5b7a;
+  --color-white:   #1a1a1a;        /* Dark text for readability */
+  --color-muted:   #6b6b6b;        /* Subtle gray for secondary text */
+  --color-divider: #e5e2dc;        /* Warm gray dividers */
+  
+  /* Semantic educational colors */
+  --color-trust:   #3d7a5a;        /* Green for confirmation */
+  --color-caution: #9a7b4f;        /* Bronze for warnings */
+  --color-info:    #5a6b7a;        /* Slate blue for info */
 
   --font-body: 'DM Sans', system-ui, sans-serif;
-  --font-mono: 'Space Mono', 'Courier New', monospace;
+  --font-mono: 'IBM Plex Mono', 'Space Mono', monospace;
+  --font-heading: 'Newsreader', Georgia, serif;
 }
 
 /* ── Base ────────────────────────────────────────────────── */
@@ -37,6 +44,8 @@ html, body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  line-height: 1.6;
 }
 
 #root {
@@ -57,6 +66,13 @@ html, body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-muted);
+}
+
+/* ── Headings ──────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: -0.02em;
 }
 
 /* ── Typography ─────────────────────────────────────────── */
@@ -141,21 +157,22 @@ code, pre, .mono {
 }
 
 .guide-hero-tag {
-  padding: 5px 12px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--color-accent);
-  background: var(--color-card);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-muted);
+  background: var(--color-panel);
   border: 1px solid var(--color-divider);
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+  transition: all 0.2s ease;
 }
 
 .guide-hero-tag:hover {
-  border-color: color-mix(in srgb, var(--color-accent) 55%, var(--color-divider));
-  background: color-mix(in srgb, var(--color-accent) 10%, var(--color-card));
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: white;
 }
 
 .guide-hero-tag:focus-visible {
@@ -173,11 +190,12 @@ code, pre, .mono {
 .guide-ignore-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
+  gap: 12px;
 }
 @media (min-width: 560px) {
   .guide-ignore-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 }
 

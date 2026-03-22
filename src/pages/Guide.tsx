@@ -2,26 +2,24 @@ import type { CSSProperties, ReactNode } from "react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
 
-const SECTION_GAP = 64
+const SECTION_GAP = 80
 const CARD_GAP = 24
 const CARD_PAD = 24
 
 const shell: CSSProperties = {
-  maxWidth: 680,
+  maxWidth: 720,
   margin: "0 auto",
-  padding: "24px 16px 48px",
+  padding: "48px 24px 80px",
   color: "var(--color-white)",
   fontFamily: "var(--font-body)",
 }
 
 const sectionLabelFive: CSSProperties = {
-  margin: `0 0 18px`,
-  paddingLeft: 12,
-  borderLeft: "4px solid var(--color-accent)",
-  fontSize: 11,
-  fontWeight: 700,
+  margin: `0 0 16px`,
+  fontSize: 12,
+  fontWeight: 500,
   textTransform: "uppercase",
-  letterSpacing: "0.2em",
+  letterSpacing: "0.1em",
   color: "var(--color-muted)",
 }
 
@@ -68,18 +66,18 @@ const btnAccent: CSSProperties = {
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
-  gap: 6,
-  padding: "14px 22px",
-  borderRadius: 10,
-  background: "linear-gradient(135deg, var(--color-accent), var(--color-accent-deep))",
-  color: "var(--color-white)",
-  fontWeight: 700,
+  gap: 8,
+  padding: "16px 32px",
+  borderRadius: 8,
+  background: "var(--color-accent)",
+  color: "white",
+  fontWeight: 500,
   fontSize: 15,
   textDecoration: "none",
   border: "none",
   cursor: "pointer",
   fontFamily: "var(--font-body)",
-  boxShadow: "0 2px 8px color-mix(in srgb, var(--color-accent) 35%, transparent)",
+  transition: "background 0.2s ease",
 }
 
 const INDICATOR_IDS = ["guide-bb", "guide-macd", "guide-rsi", "guide-vol", "guide-htf"] as const
@@ -171,29 +169,30 @@ export default function Guide() {
         <section ref={heroRef} style={{ marginBottom: SECTION_GAP }}>
           <p
             style={{
-              margin: "0 0 10px",
-              fontSize: 11,
-              fontWeight: 700,
-              letterSpacing: "0.14em",
-              color: "var(--color-accent)",
+              margin: "0 0 12px",
+              fontSize: 12,
+              fontWeight: 500,
+              letterSpacing: "0.1em",
+              color: "var(--color-muted)",
               textTransform: "uppercase",
             }}
           >
-            The methodology
+            The Methodology
           </p>
           <h1
             style={{
-              margin: "0 0 12px",
-              fontSize: "clamp(2rem, 8vw, 56px)",
-              fontWeight: 900,
-              letterSpacing: "-0.04em",
+              margin: "0 0 16px",
+              fontSize: "clamp(2.25rem, 6vw, 3.5rem)",
+              fontWeight: 400,
+              letterSpacing: "-0.03em",
               lineHeight: 1.1,
+              fontFamily: "var(--font-heading)",
             }}
           >
             Less Is More
           </h1>
-          <p style={{ margin: "0 0 20px", fontSize: 16, lineHeight: 1.55, color: "var(--color-muted)" }}>
-            Five indicators. One process. No junk.
+          <p style={{ margin: "0 0 24px", fontSize: 17, lineHeight: 1.65, color: "var(--color-muted)" }}>
+            Five indicators that cover all essential dimensions of price analysis.
           </p>
           <div className="guide-hero-tags" role="navigation" aria-label="Jump to indicator sections">
             {(["BB", "MACD", "RSI", "Volume", "HTF Bias"] as const).map((label, i) => (
@@ -404,79 +403,100 @@ export default function Guide() {
       {/* 5. WHAT TO IGNORE */}
       <Reveal>
         <section style={{ marginBottom: SECTION_GAP }}>
-          <h2
+          <p
             style={{
               margin: "0 0 8px",
-              fontSize: 13,
-              fontWeight: 700,
+              fontSize: 12,
+              fontWeight: 500,
               textTransform: "uppercase",
-              letterSpacing: "0.12em",
-              color: "var(--color-red)",
+              letterSpacing: "0.1em",
+              color: "var(--color-muted)",
             }}
           >
-            What to ignore
-          </h2>
-          <p style={{ margin: "0 0 16px", fontSize: 14, lineHeight: 1.65, color: "var(--color-muted)" }}>
-            The most valuable skill is knowing what to remove. What others try to sell you on is often just static and
-            noise — not necessary for this methodology. (These tools can still be helpful to others with different
-            systems.)
+            Redundant Indicators
           </p>
-          <div className="guide-ignore-grid" style={{ marginBottom: 16 }}>
+          <h2
+            style={{
+              margin: "0 0 20px",
+              fontSize: "clamp(1.5rem, 4vw, 2rem)",
+              fontWeight: 400,
+              fontFamily: "var(--font-heading)",
+              color: "var(--color-white)",
+            }}
+          >
+            What to leave out
+          </h2>
+          <p style={{ margin: "0 0 24px", fontSize: 15, lineHeight: 1.7, color: "var(--color-muted)" }}>
+            The most valuable skill is knowing what to remove. These indicators are not necessary
+            for this methodology as they duplicate information already covered.
+          </p>
+          <div className="guide-ignore-grid" style={{ marginBottom: 20 }}>
             {[
-              ["Stochastic", "Redundant with RSI — same vote twice"],
-              ["CCI", "Another momentum oscillator — already covered"],
-              ["Parabolic SAR", "Lags badly — BB bands do this better"],
-              ["Multiple EMAs", "Middle BB is already a moving average"],
-              ["Fibonacci", "Subjective — everyone draws different levels"],
-              ["Ichimoku", "Powerful but conflicts with this system"],
+              ["Stochastic", "Redundant with RSI — measures the same momentum"],
+              ["CCI", "Another momentum oscillator — already covered by MACD/RSI"],
+              ["Parabolic SAR", "Lags behind price — Bollinger Bands serve this purpose"],
+              ["Multiple EMAs", "Middle BB band is already a moving average"],
+              ["Fibonacci", "Subjective placement — varies between analysts"],
+              ["Ichimoku", "Comprehensive but conflicts with this framework"],
             ].map(([name, why]) => (
               <div
                 key={name}
                 style={{
-                  padding: "14px 16px",
-                  borderRadius: 8,
-                  background: "color-mix(in srgb, var(--color-red) 5%, var(--color-card))",
+                  padding: "16px 18px",
+                  borderRadius: 6,
+                  background: "var(--color-panel)",
                   border: "1px solid var(--color-divider)",
-                  borderLeft: "3px solid var(--color-red)",
                 }}
               >
-                <div style={{ fontWeight: 700, fontSize: 13, color: "var(--color-white)", marginBottom: 4 }}>{name}</div>
-                <div style={{ fontSize: 12, lineHeight: 1.45, color: "var(--color-muted)" }}>{why}</div>
+                <div style={{ fontWeight: 500, fontSize: 14, color: "var(--color-white)", marginBottom: 4 }}>{name}</div>
+                <div style={{ fontSize: 13, lineHeight: 1.5, color: "var(--color-muted)" }}>{why}</div>
               </div>
             ))}
           </div>
           <div
             style={{
-              padding: "14px 16px",
-              borderRadius: 10,
-              background: "color-mix(in srgb, var(--color-red) 12%, var(--color-panel))",
-              border: "1px solid color-mix(in srgb, var(--color-red) 45%, transparent)",
-              fontSize: 13,
-              lineHeight: 1.55,
+              padding: "16px 20px",
+              borderRadius: 6,
+              background: "var(--color-card)",
+              border: "1px solid var(--color-divider)",
+              fontSize: 14,
+              lineHeight: 1.6,
               color: "var(--color-muted)",
             }}
           >
-            If a new indicator falls into Trend, Momentum, Volatility, or Volume — it&apos;s redundant. All four
-            categories are already covered.
+            <span style={{ fontWeight: 500, color: "var(--color-white)" }}>Rule of thumb:</span> If a new indicator
+            measures Trend, Momentum, Volatility, or Volume — it's likely redundant. All four categories are
+            already covered.
           </div>
         </section>
       </Reveal>
 
       {/* 6. CTA */}
       <Reveal>
-        <section style={{ textAlign: "center", paddingTop: 8 }}>
+        <section
+          style={{
+            textAlign: "center",
+            paddingTop: 24,
+            paddingBottom: 16,
+            borderTop: "1px solid var(--color-divider)",
+          }}
+        >
           <h2
             style={{
-              margin: "0 0 18px",
-              fontSize: "clamp(1.15rem, 3vw, 1.35rem)",
-              fontWeight: 800,
+              margin: "0 0 20px",
+              fontSize: "clamp(1.25rem, 3vw, 1.5rem)",
+              fontWeight: 400,
               color: "var(--color-white)",
+              fontFamily: "var(--font-heading)",
             }}
           >
-            Ready to put it into practice?
+            Ready to apply the methodology?
           </h2>
           <Link to="/analyze" style={btnAccent}>
-            Analyze a Chart →
+            Try the Analyzer
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
           </Link>
         </section>
       </Reveal>
@@ -493,27 +513,25 @@ function IndicatorCard({
   title: string
   children: ReactNode
 }) {
-  const headerBg = `color-mix(in srgb, ${accentColor} 8%, transparent)`
   return (
     <article
       style={{
         padding: 0,
-        borderRadius: 10,
+        borderRadius: 8,
         background: "var(--color-panel)",
         border: "1px solid var(--color-divider)",
-        borderLeft: `4px solid ${accentColor}`,
+        borderLeft: `3px solid ${accentColor}`,
         overflow: "hidden",
       }}
     >
-      <div style={{ padding: "14px 24px", background: headerBg, borderBottom: "1px solid var(--color-divider)" }}>
+      <div style={{ padding: "16px 24px", background: "var(--color-card)", borderBottom: "1px solid var(--color-divider)" }}>
         <h3
           style={{
             margin: 0,
             fontSize: 18,
-            fontWeight: 800,
-            letterSpacing: "0.08em",
+            fontWeight: 500,
             color: "var(--color-white)",
-            textTransform: "uppercase",
+            fontFamily: "var(--font-heading)",
           }}
         >
           {title}
@@ -527,12 +545,12 @@ function IndicatorCard({
 const signalTableBase: CSSProperties = {
   width: "100%",
   borderCollapse: "collapse" as const,
-  fontSize: 12,
-  marginTop: 12,
+  fontSize: 13,
+  marginTop: 16,
 }
 
 const cellBase: CSSProperties = {
-  padding: "10px 12px",
+  padding: "12px 14px",
   textAlign: "left" as const,
   verticalAlign: "top" as const,
   borderBottom: "1px solid var(--color-divider)",
@@ -542,10 +560,10 @@ const thStyle: CSSProperties = {
   ...cellBase,
   background: "var(--color-card)",
   color: "var(--color-muted)",
-  fontSize: 10,
-  fontWeight: 700,
+  fontSize: 11,
+  fontWeight: 500,
   textTransform: "uppercase",
-  letterSpacing: "0.08em",
+  letterSpacing: "0.06em",
   fontFamily: "var(--font-body)",
   borderBottom: "1px solid var(--color-divider)",
 }
@@ -564,18 +582,18 @@ function SignalTable({ rows, dotColor }: { rows: [string, string][]; dotColor: s
           <tr
             key={sig}
             style={{
-              background: rowIdx % 2 === 0 ? "var(--color-panel)" : "var(--color-dark)",
+              background: rowIdx % 2 === 0 ? "var(--color-panel)" : "var(--color-card)",
             }}
           >
-            <td style={{ ...cellBase, fontWeight: 600, color: "var(--color-white)" }}>
+            <td style={{ ...cellBase, fontWeight: 500, color: "var(--color-white)" }}>
               <span style={{ display: "inline-flex", alignItems: "flex-start", gap: 10 }}>
                 <span
                   aria-hidden
                   style={{
                     flexShrink: 0,
-                    width: 8,
-                    height: 8,
-                    marginTop: 4,
+                    width: 6,
+                    height: 6,
+                    marginTop: 5,
                     borderRadius: "50%",
                     background: dotColor,
                   }}
@@ -602,8 +620,8 @@ function HtfTable({ dotColor }: { dotColor: string }) {
     <table style={signalTableBase}>
       <thead>
         <tr>
-          <th style={{ ...thStyle, fontFamily: "var(--font-mono)" }}>Your TF</th>
-          <th style={{ ...thStyle, fontFamily: "var(--font-mono)" }}>Check this HTF</th>
+          <th style={{ ...thStyle }}>Your Timeframe</th>
+          <th style={{ ...thStyle }}>Check Higher TF</th>
         </tr>
       </thead>
       <tbody>
@@ -611,18 +629,18 @@ function HtfTable({ dotColor }: { dotColor: string }) {
           <tr
             key={a}
             style={{
-              background: rowIdx % 2 === 0 ? "var(--color-panel)" : "var(--color-dark)",
+              background: rowIdx % 2 === 0 ? "var(--color-panel)" : "var(--color-card)",
             }}
           >
-            <td style={{ ...cellBase, fontWeight: 600, color: "var(--color-white)" }}>
+            <td style={{ ...cellBase, fontWeight: 500, color: "var(--color-white)", fontFamily: "var(--font-mono)" }}>
               <span style={{ display: "inline-flex", alignItems: "flex-start", gap: 10 }}>
                 <span
                   aria-hidden
                   style={{
                     flexShrink: 0,
-                    width: 8,
-                    height: 8,
-                    marginTop: 4,
+                    width: 6,
+                    height: 6,
+                    marginTop: 5,
                     borderRadius: "50%",
                     background: dotColor,
                   }}
@@ -630,7 +648,7 @@ function HtfTable({ dotColor }: { dotColor: string }) {
                 {a}
               </span>
             </td>
-            <td style={{ ...cellBase, color: "var(--color-muted)" }}>{b}</td>
+            <td style={{ ...cellBase, color: "var(--color-muted)", fontFamily: "var(--font-mono)" }}>{b}</td>
           </tr>
         ))}
       </tbody>
@@ -642,18 +660,18 @@ function CalloutAmber({ children }: { children: ReactNode }) {
   return (
     <div
       style={{
-        marginTop: 14,
-        padding: "12px 14px",
-        borderRadius: 8,
-        background: "color-mix(in srgb, var(--color-gold) 8%, transparent)",
+        marginTop: 16,
+        padding: "14px 18px",
+        borderRadius: 6,
+        background: "var(--color-card)",
         borderLeft: "3px solid var(--color-gold)",
-        fontSize: 12,
-        lineHeight: 1.5,
+        fontSize: 13,
+        lineHeight: 1.6,
         color: "var(--color-muted)",
       }}
     >
-      <span aria-hidden style={{ marginRight: 8 }}>
-        ⚠️
+      <span style={{ fontWeight: 500, color: "var(--color-gold)", marginRight: 8 }}>
+        Note:
       </span>
       {children}
     </div>
@@ -664,19 +682,19 @@ function CalloutGreen({ children, style }: { children: ReactNode; style?: CSSPro
   return (
     <div
       style={{
-        marginTop: 14,
-        padding: "12px 14px",
-        borderRadius: 8,
-        background: "color-mix(in srgb, var(--color-green) 8%, transparent)",
+        marginTop: 16,
+        padding: "14px 18px",
+        borderRadius: 6,
+        background: "var(--color-card)",
         borderLeft: "3px solid var(--color-green)",
-        fontSize: 12,
-        lineHeight: 1.5,
+        fontSize: 13,
+        lineHeight: 1.6,
         color: "var(--color-muted)",
         ...style,
       }}
     >
-      <span aria-hidden style={{ marginRight: 8 }}>
-        ✅
+      <span style={{ fontWeight: 500, color: "var(--color-green)", marginRight: 8 }}>
+        Key:
       </span>
       {children}
     </div>
@@ -687,19 +705,18 @@ function CalloutInfo({ children }: { children: ReactNode }) {
   return (
     <p
       style={{
-        margin: "14px 0 0",
-        padding: "12px 14px",
-        borderRadius: 8,
-        background: "color-mix(in srgb, var(--color-accent) 8%, transparent)",
-        borderLeft: "3px solid var(--color-accent)",
-        fontSize: 12,
-        lineHeight: 1.55,
+        margin: "16px 0 0",
+        padding: "14px 18px",
+        borderRadius: 6,
+        background: "var(--color-card)",
+        borderLeft: "3px solid var(--color-info)",
+        fontSize: 13,
+        lineHeight: 1.6,
         color: "var(--color-muted)",
-        fontStyle: "italic",
       }}
     >
-      <span aria-hidden style={{ marginRight: 8, fontStyle: "normal" }}>
-        💡
+      <span style={{ fontWeight: 500, color: "var(--color-info)", marginRight: 8 }}>
+        Tip:
       </span>
       {children}
     </p>
@@ -716,40 +733,40 @@ function PreTradeStep({
   children: ReactNode
 }) {
   return (
-    <div style={{ display: "flex", gap: 16 }}>
+    <div style={{ display: "flex", gap: 20 }}>
       <div
         style={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           flexShrink: 0,
-          width: 44,
+          width: 36,
         }}
       >
         <span
           style={{
-            fontSize: 32,
-            fontWeight: 900,
-            color: "var(--color-accent)",
-            lineHeight: 1,
-            fontFamily: "var(--font-body)",
+            fontSize: 14,
+            fontWeight: 500,
+            color: "var(--color-muted)",
+            lineHeight: 1.6,
+            fontFamily: "var(--font-mono)",
           }}
         >
-          {step}
+          {String(step).padStart(2, '0')}
         </span>
         {!isLast ? (
           <div
             style={{
               width: 0,
-              minHeight: 28,
+              minHeight: 24,
               marginTop: 8,
               marginBottom: 4,
-              borderLeft: "2px dashed var(--color-divider)",
+              borderLeft: "1px solid var(--color-divider)",
             }}
           />
         ) : null}
       </div>
-      <div style={{ flex: 1, paddingBottom: isLast ? 0 : 20, fontSize: 14, lineHeight: 1.75, color: "var(--color-muted)" }}>
+      <div style={{ flex: 1, paddingBottom: isLast ? 0 : 16, fontSize: 15, lineHeight: 1.7, color: "var(--color-muted)" }}>
         {children}
       </div>
     </div>
